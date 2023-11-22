@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Visualization - OTT Platforms</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
 <body class="bg-black text-white">
@@ -35,8 +36,8 @@
             different platforms with content growth and decline.
         </p>
         <div class="mt-4">
-            <img src="https://www.amcharts.com/wp-content/uploads/2020/02/demo_15121_none-7.png"
-                alt="Data Visualization" class="w-full rounded-lg">
+            <svg id="barChartRace">
+            </svg>
         </div>
     </div>
     <div class="text-center mt-8">
@@ -45,5 +46,13 @@
             With Data</a>
     </div>
 </body>
+
+
+<script>
+    d3.csv("https://raw.githubusercontent.com/p-nanaware/dv-project/main/data/clean_data.csv").then(data => {
+        console.log(data)
+
+    })
+</script>
 
 </html>
