@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+span {
+    display: flex;
+    justify-content: center;
+}
+
+body {
+    margin: 0;
+    /* background-color: goldenrod; */
+    background-color: whitesmoke;
+}
+
+.maptitle {
+    font-size: 4vh;
+    /* background-color: gold; */
+    color: red;
+}
+
+#choropleth {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+svg {
+    margin: 10px;
+    padding: 15px;
+    /* background-color: rgb(22, 151, 151); */
+}
+
+.choropleth {
+    display: flex;
+    justify-content: center;
+}
