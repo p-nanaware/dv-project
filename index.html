@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Visualization - OTT Platforms</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
+
+
 </head>
 
 <body class="bg-black text-white">
@@ -16,28 +19,15 @@
     </div>
 
     <div class="bg-gray-800 rounded-lg shadow-lg p-4 mx-auto max-w-screen-xl mt-8">
-        <h2 class="text-2xl font-semibold text-white">Geospatial Cartogram</h2>
-        <p class="text-gray-300 mt-2">Revealing which countries contribute significantly to Netflix, Amazon, and Disney.
-            <br> The below image is a placeholder. If you click on a county in that map for that specific image, it will
-            lead you to a different page revealing visualizations specifically for that country.
-        </p>
-        <div class="mt-4">
-            <a href="country_visualization.html">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/World_Map_blank.PNG"
-                    alt="Data Visualization" class="w-full rounded-lg">
-            </a>
-        </div>
-    </div>
-
-    <div class="bg-gray-800 rounded-lg shadow-lg p-4 mx-auto max-w-screen-xl mt-8">
-        <h2 class="text-2xl font-semibold text-white">Bar Chart Race</h2>
-        <p class="text-gray-300 mt-2">
-        <div id="currentYear" class="text-lg text-gray-300  p-2"></div>
+        <h2 class="text-2xl font-semibold text-white">Content on OTT Platforms Bar Chart Race</h2>
+        <p class="text-white mt-2">
+        <div id="currentYear" class="text-lg text-gray-300 p-2"></div>
         </p>
 
-        <div class="mt-4 relative" id="barChartRaceContainer">
+        <div class="mt-4 relative">
+            <!-- Container for the chart -->
+            <svg id="barChartRaceContainer" width="100%" height="600" , width="960"></svg>
         </div>
-
 
         <div class="mt-4 flex items-center justify-center">
             <button id="playPauseBtn"
@@ -46,90 +36,8 @@
             </button>
         </div>
     </div>
-    <div class="text-center mt-8">
-        <a href="chat_data.html"
-            class="bg-red-600 border border-red-600 text-white text-lg font-semibold px-4 py-2 rounded-full hover:bg-red-700 hover:border-red-700">
-            Chat With Data
-        </a>
-    </div>
-
-    <style>
-        .bar-chart-bar {
-            background-color: #4FD1C5;
-            margin: 2px 0;
-            padding: 8px;
-            color: white;
-            font-size: 14px;
-        }
-
-        #playPauseBtn:hover {
-            background-color: #34D399;
-        }
-    </style>
-
-    <script>
-
-        d3.json("platform.csv").then(data => {
-            console.log(data);
-            const platforms = Object.keys(data);
-            const years = Array.from(new Set(Object.values(data).flatMap(yearData => Object.keys(yearData))));
-            let currentYearIndex = 0;
-            let interval;
-
-            function updateBarChart(year) {
-                const containerWidth = document.getElementById('barChartRaceContainer').offsetWidth;
-
-                const barChartData = platforms.map((platform, index) => {
-                    const value = data[platform][year] || 0;
-                    // Set a maximum width for the bars based on the container width
-                    const maxWidth = containerWidth / 2;
-                    const width = value > maxWidth ? maxWidth : value;
-                    return { platform, value, width, color: d3.schemeCategory10[index] };
-                });
-
-                barChartData.sort((a, b) => b.value - a.value);
-
-                // Update the bar chart using D3
-                d3.select("#barChartRaceContainer")
-                    .selectAll("div")
-                    .data(barChartData)
-                    .join("div")
-                    .style("width", d => `${d.width}px`)  // Use the width to set the bar width
-                    .style("max-width", `${containerWidth}px`)  // Set max-width to container width
-                    .style("background-color", d => d.color)
-                    .text(d => `${d.platform}: ${d.value}`)
-                    .attr("class", "bar-chart-bar");
-
-                // Update the displayed year
-                d3.select("#currentYear").text(`Year: ${year}`);
-
-            }
-
-            d3.select("#currentYear").text(`Year: ${years[currentYearIndex]}`);
-
-
-            function nextYear() {
-                currentYearIndex = (currentYearIndex + 1) % years.length;
-                updateBarChart(years[currentYearIndex]);
-            }
-
-            function playPause() {
-                if (interval) {
-                    clearInterval(interval);
-                    d3.select("#playPauseBtn").text("Play");
-                    interval = null;
-                } else {
-                    interval = setInterval(nextYear, 1500);
-                    d3.select("#playPauseBtn").text("Pause");
-                }
-            }
-
-            updateBarChart(years[currentYearIndex]);
-            d3.select("#playPauseBtn").on("click", playPause);
-        });
-    </script>
-
 
 </body>
+<script src="bar_chart_race.js"></script>
 
 </html>
