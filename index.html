@@ -33,8 +33,6 @@
         <h2 class="text-2xl font-semibold text-white">Bar Chart Race</h2>
         <p class="text-gray-300 mt-2">
         <div id="currentYear" class="text-lg text-gray-300  p-2"></div>
-
-
         </p>
 
         <div class="mt-4 relative" id="barChartRaceContainer">
@@ -70,7 +68,9 @@
     </style>
 
     <script>
-        d3.json("https://raw.githubusercontent.com/p-nanaware/dv-project/main/data/platform_count.json").then(data => {
+
+        d3.json("platform.csv").then(data => {
+            console.log(data);
             const platforms = Object.keys(data);
             const years = Array.from(new Set(Object.values(data).flatMap(yearData => Object.keys(yearData))));
             let currentYearIndex = 0;
@@ -119,7 +119,7 @@
                     d3.select("#playPauseBtn").text("Play");
                     interval = null;
                 } else {
-                    interval = setInterval(nextYear, 700);
+                    interval = setInterval(nextYear, 1500);
                     d3.select("#playPauseBtn").text("Pause");
                 }
             }
