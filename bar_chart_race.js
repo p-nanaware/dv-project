@@ -32,7 +32,7 @@ let caption = svg.append('text')
 
 let year = 2008;
 
-d3.csv('https://raw.githubusercontent.com/p-nanaware/dv-project/race/test.csv').then(function (data) {
+d3.csv('https://raw.githubusercontent.com/p-nanaware/dv-project/main/data/platform_count.csv').then(function (data) {
     //if (error) throw error;
 
     console.log(data);
