@@ -36,7 +36,7 @@ const loadData = d3.json("./world.geojson").then((data) => {
             "#fd8d3c",
             "#f03b20",
             "#bd0026",
-        ].reverse()
+        ]
     );
 
     const linearScale = d3.scaleLinear().domain(
@@ -44,9 +44,6 @@ const loadData = d3.json("./world.geojson").then((data) => {
             return d["properties"]["Movie"];
         })
     );
-
-    // TV Show
-    // Movie
 
     svg.selectAll("path")
         .data(data.features)
@@ -56,10 +53,10 @@ const loadData = d3.json("./world.geojson").then((data) => {
         .attr("fill", (d) =>
             colorInterpolator(linearScale(d["properties"]["Movie"]))
         )
-        .attr("stroke", "black");
+        .attr("stroke", "black")
+        .on("click", (e, d) => console.log(d))
 
     function handleDrag(event) {
-        // Adjust the projection based on the drag event
         const rotate = projection.rotate();
         const k = svgHeight / 100; // Sensitivity factor for panning
         projection.rotate([rotate[0] + event.dx / k, rotate[1] - event.dy / k]);
