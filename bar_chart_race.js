@@ -32,6 +32,7 @@ let caption = svg.append('text')
 
 let year = 2008;
 
+
 d3.csv('https://raw.githubusercontent.com/p-nanaware/dv-project/main/data/platform_count.csv').then(function (data) {
     //if (error) throw error;
 
@@ -123,7 +124,7 @@ d3.csv('https://raw.githubusercontent.com/p-nanaware/dv-project/main/data/platfo
         .style('text-anchor', 'end')
         .html(~~year)
 
-    let ticker = d3.interval(e => {
+    function tickerCallback(e) {
 
         yearSlice = data.filter(d => d.year == year && !isNaN(d.value))
             .sort((a, b) => b.value - a.value)
@@ -246,9 +247,20 @@ d3.csv('https://raw.githubusercontent.com/p-nanaware/dv-project/main/data/platfo
 
         yearText.html(~~year);
 
+
         if (year == 2021) ticker.stop();
         year = d3.format('.1f')((+year) + 1.0);
-    }, tickDuration);
+    }
+
+    let ticker = d3.interval(tickerCallback, tickDuration);
+
+    let replayButton = document.getElementById("replayButton");
+
+    replayButton.addEventListener("click", function () {
+        year = 2008;
+        ticker.stop();
+        ticker = d3.interval(tickerCallback, tickDuration);
+    });
 
 });
 
