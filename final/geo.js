@@ -64,7 +64,7 @@ const loadData = d3.json("./world.geojson").then((data) => {
         )
         .attr("stroke", "black")
         .on("click", (e, d) => {
-            let country_specific_url = 'http://127.0.0.1:5500/final/country-specific.html'
+            let country_specific_url = 'country-specific.html'
             var url = `${country_specific_url}?param1=` + encodeURIComponent(d['properties']['name']);
             window.open(url, '_self');
             // console.log(d['properties']['name']);
