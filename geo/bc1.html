@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Media Platform Comparison</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+        .chart-container {
+            width: 70%;
+            max-width: 800px;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .chart-title {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+        }
+        select {
+            margin: 20px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-title">Media Platform Comparison</div>
+    <p id="countryName"></p>
+    <div class="chart-container">
+        <canvas id="platformChart"></canvas>
+    </div>
+
+    <script>
+    
+        d3.csv("data.csv").then(function(data) {
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var param1Value = urlParams.get('param1');
+            console.log(`param1Value: ${param1Value}`);
+            
+            var countries = [...new Set(data.map(d => d.country))];
+
+            var ctx = document.getElementById('platformChart').getContext('2d');
+            var platformChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: []
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            function updateChart(country) {
+
+                var filteredData = data.filter(d => d.country === country);
+
+                var outputElement = document.getElementById('countryName');
+                outputElement.innerHTML = country;
+
+                var platforms = [...new Set(filteredData.map(d => d.platform))];
+                var moviesData = platforms.map(platform => {
+                    return filteredData.filter(d => d.type === 'Movie' && d.platform === platform).length;
+                });
+                var tvShowsData = platforms.map(platform => {
+                    return filteredData.filter(d => d.type === 'TV Show' && d.platform === platform).length;
+                });
+
+                platformChart.data.labels = platforms;
+                platformChart.data.datasets = [
+                    {
+                        label: 'Movies',
+                        data: moviesData,
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                    },
+                    {
+                        label: 'TV Shows',
+                        data: tvShowsData,
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                    }
+                ];
+                platformChart.update();
+            }
+
+            updateChart(param1Value);
+        });
+    </script>
+</body>
+</html>

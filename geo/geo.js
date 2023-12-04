@@ -7,7 +7,7 @@ const window_dims = {
 const svgWidth = window_dims.width / 2;
 const svgHeight = window_dims.width / 3;
 
-const loadData = d3.json("./world.geojson").then((data) => {
+const loadData = d3.json("./geo/world.geojson").then((data) => {
     const svg = d3
         .select(".choropleth")
         .append("svg")
@@ -54,7 +54,11 @@ const loadData = d3.json("./world.geojson").then((data) => {
             colorInterpolator(linearScale(d["properties"]["Movie"]))
         )
         .attr("stroke", "black")
-        .on("click", (e, d) => console.log(d))
+        .on("click", (e, d) => {
+            var url = 'http://127.0.0.1:5500/geo/bc1.html?param1=' + encodeURIComponent(d['properties']['name']);
+            window.open(url, '_blank');
+            console.log(d['properties']['name']);
+        })
 
     function handleDrag(event) {
         const rotate = projection.rotate();
