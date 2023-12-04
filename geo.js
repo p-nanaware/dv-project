@@ -70,6 +70,17 @@ const loadData = d3.json("./world.geojson").then((data) => {
             // console.log(d['properties']['name']);
         })
 
+    d["properties"]["Movie"] + d["properties"]["TV Show"].on("click", (e, d) => {
+        let country_specific_url = 'country-specific.html'
+        var url = `${country_specific_url}?param1=` + encodeURIComponent(d['properties']['name']);
+        window.open(url, '_self');
+    }).on("mouseover", function (d, data) {
+        console.log(data.properties['name'])
+        div.innerHTML += `Country: ${data["properties"]["name"]} <br> Content: ${(data["properties"]["Movie"] + data["properties"]["TV Show"])}`;
+    }).on("mouseout", function (d) {
+        div.innerHTML = ''
+    })
+
     function handleDrag(event) {
         const rotate = projection.rotate();
         const k = svgHeight / 100; // Sensitivity factor for panning

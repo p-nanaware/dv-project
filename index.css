@@ -8,6 +8,14 @@ text.title {
     font-weight: 500;
 }
 
+.tt {
+    display: flex;
+    justify-content: center;
+    color: white;
+    height: 4vh;
+    font-size: 3vh;
+}
+
 text.subTitle {
     font-weight: 500;
     fill: white;
