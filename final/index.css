@@ -73,3 +73,11 @@ svg {
     display: flex;
     justify-content: center;
 }
+
+.tt {
+    display: flex;
+    justify-content: center;
+    color: white;
+    height: 4vh;
+    font-size: 3vh;
+  }
